@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>HttpClient 的 NoHttpResponseException 解决方案 | 用简单的问答，诠释你的疑问 | 改变世界的同时顺便改善一下自己的生活</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="网络">
+  <meta name="description" content="最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。
+在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HttpClient 的 NoHttpResponseException 解决方案">
+<meta property="og:url" content="http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/index.html">
+<meta property="og:site_name" content="用简单的问答，诠释你的疑问">
+<meta property="og:description" content="最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。
+在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主">
+<meta property="og:updated_time" content="2016-07-14T08:11:10.392Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HttpClient 的 NoHttpResponseException 解决方案">
+<meta name="twitter:description" content="最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。
+在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主">
+  
+    <link rel="alternative" href="/atom.xml" title="用简单的问答，诠释你的疑问" type="application/atom+xml">
+  
+  <meta name="summary" content="null">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="/img/logo.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">Shine</h5>
+        <a href="mailto:undefined" title="wyhdgx@163.com" class="mail">wyhdgx@163.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            Archives
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            Tags
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/Shineee" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://www.gitbook.com/@shine" target="_blank" >
+            <i class="icon icon-lg icon-leanpub"></i>
+            Gitbook
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/yanggeniubi" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>用简单的问答，诠释你的疑问 &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">HttpClient 的 NoHttpResponseException 解决方案</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">HttpClient 的 NoHttpResponseException 解决方案</h1>
+    <h5 class="subtitle">
+          
+            <time datetime="2016-07-13T10:20:29.967Z" itemprop="datePublished" class="page-time">
+  2016-07-13
+</time>
+
+ 
+        
+    </h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      <article id="post-1/httpclient-no-http-response-exception" 
+  class="article article-type-post" itemprop="blogPost">
+    <div class="post-meat flex-row">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+
+    </div>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
+
+            
+            <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+            
+
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            
+            </nav>
+            
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。</p>
+<p>在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主要是因为我们的软件要求支持2.2以上，所以2.3以下还是得用 HttpClient，因为官网是这么说的：</p>
+<p><code>Apache HTTP client has fewer bugs in Android 2.2 (Froyo) and earlier releases. For Android 2.3 (Gingerbread) and later,HttpURLConnection is the best choice.</code></p>
+<p>Android 上面用的都是比较旧的 HttpClient，bug也比较多，所以建议用最新稳定版的HttpClient，最新的 HttpClient 直接放到项目里是不可以的，所以我用了一个老外的 httpclientandroidlib-1.2.1.jar，这个人一直在维护更新，搜索引擎搜一下就行了，他封装的是4.3.2版的 HttpClient，这是个在 stackoverflow上面搜到的，新版的 HttpClient 解决了很多bug，这里就不多说了，直接去官网看吧。说一下NoHttpResponseException 问题,这个问题其实就是大意导致的首先看下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpGet.addHeader(<span class="string">"Range"</span>, <span class="string">"bytes="</span> + alreadySize + <span class="string">"-"</span>+ totalSize);</div></pre></td></tr></table></figure>
+<p>在这句之后执行请求，就会出现 NoHttpResponseException 。(根据服务器具体情况，如果兼容错误的服务器，不会报出异常，只说异常情况下的)</p>
+<p><strong>分析</strong></p>
+<p>这里执行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpGet.addHeader(<span class="string">"Range"</span>, <span class="string">"bytes=0-"</span>);</div></pre></td></tr></table></figure>
+<p>返回的 Response 的 Header 中的部分信息如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Content-Range: bytes 0-97103319/97103320</div></pre></td></tr></table></figure>
+<p>0 代表开始位置，97103319 表示服务器可以接受的最大位置(结束位置)，97103320 表示文件的长度。</p>
+<p>问题出现了，我上面请求 range 的时候给的是文件长度 (97103320)，而服务器能接受的是 97103319，超出了范围，所以服务器返回了 NoHttpResponseException。</p>
+<p>再看 HttpClient 源码, NoHttpResponseException 是从什么地方抛出来的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// clear the buffer  </span></div><div class="line">            <span class="keyword">this</span>.lineBuf.clear();  </div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> i = sessionBuffer.readLine(<span class="keyword">this</span>.lineBuf);  </div><div class="line">            <span class="keyword">if</span> (i == -<span class="number">1</span> &amp;&amp; count == <span class="number">0</span>) &#123;  </div><div class="line">                <span class="comment">// The server just dropped connection on us  </span></div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> NoHttpResponseException(<span class="string">"The target server failed to respond"</span>);  </div><div class="line">            &#125;</div></pre></td></tr></table></figure>
+<p>由上面的代码可知，readLine 的时候，i=-1，所以抛出了 NoHttpResponseException，为什么 i=-1呢，其实是因为我们 range 请求的时候，超出了范围，导致服务器未返回数据，致使 readLine 为-1。</p>
+<p><strong>解决方案</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">httpGet.addHeader(<span class="string">"Range"</span>, <span class="string">"bytes="</span> + alreadySize + <span class="string">"-"</span>  </div><div class="line">                    + (totalSize-<span class="number">1</span>));</div></pre></td></tr></table></figure>
+<p>这样请求之后，服务器就可以正常返回 response 了。</p>
+<p>由此可以得出结论，range 超出范围可能只是其中的一种出错原因，还有可能其他配置参数或者请求信息不正确导致服务器不能正确返回 response，致使 HttpClient 抛出 NoHttpResponseException，所以建议出现这种错误的时候，检查一下header等位置，是否符合规定。</p>
+<p>此文只是个人记录，参考为主，如果说的不正确，请评论指出，互相学习，抛砖引玉，谢谢！Peace&amp;love</p>
+
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/" target="_blank" rel="external">http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/</a>
+                </p>
+                <footer><cite><a href="http://adbbb.com">@用简单的问答，诠释你的疑问</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2016/07/14/1/input-file-was-not-found-or-was-not-readable/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Input file was not found or was not readable 解决方案</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+            
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="1/httpclient-no-http-response-exception" data-title="HttpClient 的 NoHttpResponseException 解决方案" data-url="http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"Shine"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+        </div>
+    </div>
+</article>
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "HttpClient 的 NoHttpResponseException 解决方案",
+    pic: "/img/logo.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259900699&web_id=1259900699"></script>
+
+
+
+
+
+</body>
+</html>
