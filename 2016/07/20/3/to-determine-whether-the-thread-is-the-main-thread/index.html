@@ -3,26 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>INSTALL_FAILED_UID_CHANGED 解决方案 | 用简单的问答，诠释你的疑问 | 改变世界的同时顺便改善一下自己的生活</title>
+  <title>Android 判断线程是否是主线程 | 用简单的问答，诠释你的疑问 | 改变世界的同时顺便改善一下自己的生活</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="theme-color" content="#3F51B5">
   
   
-  <meta name="keywords" content="编译部署">
-  <meta name="description" content="原因：以前安装过这个应用程序，因为检查到原来/data/data下的文件对应uid还是旧的
-解决方案：到/data/data下删除完这个程序包名对应的文件夹， 新安装的程序会另外生成uid。">
+  <meta name="keywords" content="多线程">
+  <meta name="description" content="1234567891011private static void checkThread() &amp;#123;          if (Looper.myLooper() != Looper.getMainLooper()) &amp;#123;              Throwable throwable = new Throwable(                      &quot;Warning:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="INSTALL_FAILED_UID_CHANGED 解决方案">
+<meta property="og:title" content="Android 判断线程是否是主线程">
 <meta property="og:url" content="http://adbbb.com/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/index.html">
 <meta property="og:site_name" content="用简单的问答，诠释你的疑问">
-<meta property="og:description" content="原因：以前安装过这个应用程序，因为检查到原来/data/data下的文件对应uid还是旧的
-解决方案：到/data/data下删除完这个程序包名对应的文件夹， 新安装的程序会另外生成uid。">
-<meta property="og:updated_time" content="2016-07-16T07:12:31.839Z">
+<meta property="og:description" content="1234567891011private static void checkThread() &amp;#123;          if (Looper.myLooper() != Looper.getMainLooper()) &amp;#123;              Throwable throwable = new Throwable(                      &quot;Warning:">
+<meta property="og:updated_time" content="2016-07-20T05:12:29.720Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="INSTALL_FAILED_UID_CHANGED 解决方案">
-<meta name="twitter:description" content="原因：以前安装过这个应用程序，因为检查到原来/data/data下的文件对应uid还是旧的
-解决方案：到/data/data下删除完这个程序包名对应的文件夹， 新安装的程序会另外生成uid。">
+<meta name="twitter:title" content="Android 判断线程是否是主线程">
+<meta name="twitter:description" content="1234567891011private static void checkThread() &amp;#123;          if (Looper.myLooper() != Looper.getMainLooper()) &amp;#123;              Throwable throwable = new Throwable(                      &quot;Warning:">
   
     <link rel="alternative" href="/atom.xml" title="用简单的问答，诠释你的疑问" type="application/atom+xml">
   
@@ -111,7 +108,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">INSTALL_FAILED_UID_CHANGED 解决方案</div>
+        <div class="flex-col header-title ellipsis">Android 判断线程是否是主线程</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -132,7 +129,7 @@
 </header>
 <header class="content-header">
   <div class="container">
-    <h1 class="author">INSTALL_FAILED_UID_CHANGED 解决方案</h1>
+    <h1 class="author">Android 判断线程是否是主线程</h1>
     <h5 class="subtitle">
           
             <time datetime="2016-07-20T04:38:31.924Z" itemprop="datePublished" class="page-time">
@@ -150,7 +147,7 @@
   class="article article-type-post" itemprop="blogPost">
     <div class="post-meat flex-row">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编译部署/">编译部署</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
 
     </div>
     <div class="post-body">
@@ -205,9 +202,7 @@
         <div class="post-main">
 
             <div class="post-content" id="post-content" itemprop="postContent">
-            <p><strong>原因</strong>：以前安装过这个应用程序，因为检查到原来/data/data下的文件对应uid还是旧的</p>
-<p><strong>解决方案</strong>：到/data/data下删除完这个程序包名对应的文件夹， 新安装的程序会另外生成uid。</p>
-
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkThread</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">if</span> (Looper.myLooper() != Looper.getMainLooper()) &#123;  </div><div class="line">            Throwable throwable = <span class="keyword">new</span> Throwable(  </div><div class="line">                    <span class="string">"Warning: A WebView method was called on thread '"</span> +  </div><div class="line">                    Thread.currentThread().getName() + <span class="string">"'. "</span> +  </div><div class="line">                    <span class="string">"All WebView methods must be called on the UI thread. "</span> +  </div><div class="line">                    <span class="string">"Future versions of WebView may not support use on other threads."</span>);  </div><div class="line">            Log.w(LOGTAG, Log.getStackTraceString(throwable));  </div><div class="line">            StrictMode.onWebViewMethodCalledOnWrongThread(throwable);  </div><div class="line">        &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
             <blockquote>
                 <p>
                 本文地址：
@@ -235,7 +230,7 @@
             
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="3/to-determine-whether-the-thread-is-the-main-thread" data-title="INSTALL_FAILED_UID_CHANGED 解决方案" data-url="http://adbbb.com/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/index.html"></div>
+	<div class="ds-thread" data-thread-key="3/to-determine-whether-the-thread-is-the-main-thread" data-title="Android 判断线程是否是主线程" data-url="http://adbbb.com/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/index.html"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -266,7 +261,7 @@
 
 <script>
 var BLOG_SHARE = {
-    title: "INSTALL_FAILED_UID_CHANGED 解决方案",
+    title: "Android 判断线程是否是主线程",
     pic: "/img/logo.jpg",
     summary: document.getElementsByName('summary')[0].content,
     url: "http://adbbb.com/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/index.html"

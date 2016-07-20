@@ -145,7 +145,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/">INSTALL_FAILED_UID_CHANGED 解决方案</a>
+      <a class="post-title-link" href="/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/">Android 判断线程是否是主线程</a>
     </h3>
   
 
@@ -163,13 +163,11 @@
     
     <div class="post-content" id="post-content" itemprop="postContent" >
     
-        <p><strong>原因</strong>：以前安装过这个应用程序，因为检查到原来/data/data下的文件对应uid还是旧的</p>
-<p><strong>解决方案</strong>：到/data/data下删除完这个程序包名对应的文件夹， 新安装的程序会另外生成uid。</p>
-
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkThread</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">if</span> (Looper.myLooper() != Looper.getMainLooper()) &#123;  </div><div class="line">            Throwable throwable = <span class="keyword">new</span> Throwable(  </div><div class="line">                    <span class="string">"Warning: A WebView method was called on thread '"</span> +  </div><div class="line">                    Thread.currentThread().getName() + <span class="string">"'. "</span> +  </div><div class="line">                    <span class="string">"All WebView methods must be called on the UI thread. "</span> +  </div><div class="line">                    <span class="string">"Future versions of WebView may not support use on other threads."</span>);  </div><div class="line">            Log.w(LOGTAG, Log.getStackTraceString(throwable));  </div><div class="line">            StrictMode.onWebViewMethodCalledOnWrongThread(throwable);  </div><div class="line">        &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
     
     </div>
     
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编译部署/">编译部署</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
 
 </article>
     </li>
