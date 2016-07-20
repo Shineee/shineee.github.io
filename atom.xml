@@ -17,6 +17,29 @@
   
   <entry>
     <title>INSTALL_FAILED_UID_CHANGED 解决方案</title>
+    <link href="http://adbbb.com/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/"/>
+    <id>http://adbbb.com/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/</id>
+    <published>2016-07-20T04:38:31.924Z</published>
+    <updated>2016-07-16T07:12:31.839Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;strong&gt;原因&lt;/strong&gt;：以前安装过这个应用程序，因为检查到原来/data/data下的文件对应uid还是旧的&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解决方案&lt;/strong&gt;：到/data/data下删除完这个程序包名对应的文件夹， 新安装的程序会另外生成uid。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;原因&lt;/strong&gt;：以前安装过这个应用程序，因为检查到原来/data/data下的文件对应uid还是旧的&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解决方案&lt;/strong&gt;：到/data/data下删除完这个程序包名对应的文件夹， 新安装的程序会另外生成uid。&lt;
+    
+    </summary>
+    
+    
+      <category term="编译部署" scheme="http://adbbb.com/tags/%E7%BC%96%E8%AF%91%E9%83%A8%E7%BD%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>INSTALL_FAILED_UID_CHANGED 解决方案</title>
     <link href="http://adbbb.com/2016/07/16/2/install-failed-uid-changed-case/"/>
     <id>http://adbbb.com/2016/07/16/2/install-failed-uid-changed-case/</id>
     <published>2016-07-16T07:08:01.009Z</published>
