@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://adbbb.com/"/>
-  <updated>2016-08-08T08:53:57.744Z</updated>
+  <updated>2016-08-08T09:17:46.019Z</updated>
   <id>http://adbbb.com/</id>
   
   <author>
@@ -20,11 +20,11 @@
     <link href="http://adbbb.com/2016/08/08/4/delete-the-history-of-a-file-on-github/"/>
     <id>http://adbbb.com/2016/08/08/4/delete-the-history-of-a-file-on-github/</id>
     <published>2016-08-08T08:40:43.411Z</published>
-    <updated>2016-08-08T08:53:57.744Z</updated>
+    <updated>2016-08-08T09:17:46.019Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;问题&lt;/strong&gt;：删除 Github 上某个文件的历史记录&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;解决方案&lt;/strong&gt;：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;git filter-branch --force --index-filter &amp;apos;git rm --cached --ignore-unmatch 文件名|文件夹/文件名&amp;apos; --prune-empty --tag-name-filter cat -- --all&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git push origin master --force&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;rm -rf .git/refs/original/&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git reflog expire --expire=now --all&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git gc --prune=now&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git gc --aggressive --prune=now&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;git filter-branch --force --index-filter &amp;apos;git rm --cached --ignore-unmatch 文件名|文件夹/文件名&amp;apos; --prune-empty --tag-name-filter cat -- --all&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git push origin master --force&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;rm -rf .git/refs/original/&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git reflog expire --expire=now --all&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git gc --prune=now&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git gc --aggressive --prune=now&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;&lt;strong&gt;注&lt;/strong&gt;：文件名|文件夹/文件名，举个例子&lt;/p&gt;
 &lt;p&gt;file.txt&lt;/p&gt;
 &lt;p&gt;folder/file.txt&lt;/p&gt;
