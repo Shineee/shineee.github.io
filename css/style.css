@@ -2072,6 +2072,9 @@
 .icon-zhihu:before {
   content: '知';
 }
+.icon-ximalaya:before {
+  content: '听';
+}
 *,
 *::before,
 *::after {
