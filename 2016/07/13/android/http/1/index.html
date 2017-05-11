@@ -3,19 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>用简单的问答，诠释你的疑问 | 改变世界的同时顺便改善一下自己的生活</title>
+  <title>HttpClient 的 NoHttpResponseException 解决方案 | 用简单的问答，诠释你的疑问 | 改变世界的同时顺便改善一下自己的生活</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="theme-color" content="#3F51B5">
   
   
-  <meta name="keywords" content="undefined">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="用简单的问答，诠释你的疑问">
-<meta property="og:url" content="http://adbbb.com/index.html">
+  <meta name="keywords" content="网络">
+  <meta name="description" content="最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。
+在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HttpClient 的 NoHttpResponseException 解决方案">
+<meta property="og:url" content="http://adbbb.com/2016/07/13/android/http/1/index.html">
 <meta property="og:site_name" content="用简单的问答，诠释你的疑问">
+<meta property="og:description" content="最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。
+在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主">
+<meta property="og:updated_time" content="2016-07-14T08:11:10.392Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用简单的问答，诠释你的疑问">
+<meta name="twitter:title" content="HttpClient 的 NoHttpResponseException 解决方案">
+<meta name="twitter:description" content="最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。
+在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主">
   
     <link rel="alternative" href="/atom.xml" title="用简单的问答，诠释你的疑问" type="application/atom+xml">
   
@@ -27,7 +34,7 @@
 <body>
   <div id="loading" class="active"></div>
 
-  <nav id="menu"  >
+  <nav id="menu" class="hide" >
    <div class="inner flex-row-vertical">
   <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
       <i class="icon icon-lg icon-close"></i>
@@ -43,7 +50,7 @@
   </div>
   <ul class="nav flex-col">
     
-        <li class="waves-block waves-effect active">
+        <li class="waves-block waves-effect">
           <a href="/"  >
             <i class="icon icon-lg icon-home"></i>
             主页
@@ -118,7 +125,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">用简单的问答，诠释你的疑问</div>
+        <div class="flex-col header-title ellipsis">HttpClient 的 NoHttpResponseException 解决方案</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -139,263 +146,80 @@
 </header>
 <header class="content-header">
   <div class="container">
-    <h1 class="author">用简单的问答，诠释你的疑问</h1>
+    <h1 class="author">HttpClient 的 NoHttpResponseException 解决方案</h1>
     <h5 class="subtitle">
-         
-        改变世界的同时顺便改善一下自己的生活
+          
+            <time datetime="2016-07-13T10:20:29.967Z" itemprop="datePublished" class="page-time">
+  2016-07-13
+</time>
+
+ 
         
     </h5>
   </div>
 </header>
 
     <div class="container body-wrap">
-      <ul class="post-list">
-  
-    <li class="post-list-item">
-        <article id="post-git/2" 
+      <article id="post-android/http/1" 
   class="article article-type-post" itemprop="blogPost">
-     
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/05/11/git/2/">Git 回滚</a>
-    </h3>
-  
-
-
-
-    <div class="post-meta">
-        <time datetime="2017-05-11T10:17:38.131Z" itemprop="datePublished" class="post-time">
-  2017-05-11
-</time>
-
+    <div class="post-meat flex-row">
         
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
 
- 
     </div>
-    
-    <div class="post-content" id="post-content" itemprop="postContent" >
-    
-        <p><strong>问题</strong>：</p>
-<ol>
-<li>回滚上一版</li>
-<li>回滚指定版本</li>
-</ol>
-<p><strong>解决方案</strong>：</p>
-<ol>
-<li><p>没有push</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset [--soft | --mixed | --hard]</div></pre></td></tr></table></figure>
-<p><strong>注</strong>：git reset是直接删除指定的提交。</p>
-<p>① –mixed：保留源码，回滚到上一版本，git reset 默认是 –mixed 模式，git reset –mixed  等价于  git reset，将commit和index 信息回滚。</p>
-<p>② –soft：保留源码，将commit 信息回滚，不涉及index的回滚。</p>
-<p>③ –hard：不保留源码，将commit和index 信息回滚。</p>
-</li>
-<li><p>已经push</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git revert commitId</div></pre></td></tr></table></figure>
-<p><strong>注</strong>：git revert用一个新提交来消除一个历史提交所做的任何修改。</p>
-</li>
-</ol>
-<h4 id="操作时注意事项："><a href="#操作时注意事项：" class="headerlink" title="操作时注意事项："></a>操作时注意事项：</h4><p>第一：</p>
-<p>上面我们说的如果你已经push到线上代码库， reset 删除指定commit以后，你git push可能导致一大堆冲突。但是revert 并不会。</p>
-<p>第二：</p>
-<p>如果在日后现有分支和历史分支需要合并的时候，reset 恢复部分的代码依然会出现在历史分支里。但是revert 方向提交的commit 并不会出现在历史分支里。</p>
-<p>第三：</p>
-<p>reset 是在正常的commit历史中，删除了指定的commit,这时 HEAD 是向后移动了，而 revert 是在正常的commit历史中再commit一次,只不过是反向提交，他的 HEAD 是一直向前的。</p>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
 
-    
-    </div>
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
+            
+            <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
 
-</article>
-    </li>
-  
-    <li class="post-list-item">
-        <article id="post-git/1" 
-  class="article article-type-post" itemprop="blogPost">
-     
+            
 
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            
+            </nav>
+            
+        </aside>
 
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/08/08/git/1/">删除 Github 上某个文件的历史记录</a>
-    </h3>
-  
+        <div class="post-main">
 
-
-
-    <div class="post-meta">
-        <time datetime="2016-08-08T08:40:43.411Z" itemprop="datePublished" class="post-time">
-  2016-08-08
-</time>
-
-        
-
- 
-    </div>
-    
-    <div class="post-content" id="post-content" itemprop="postContent" >
-    
-        <p><strong>问题</strong>：删除 Github 上某个文件的历史记录</p>
-<p><strong>解决方案</strong>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git filter-branch --force --index-filter &apos;git rm --cached --ignore-unmatch 文件名|文件夹/文件名&apos; --prune-empty --tag-name-filter cat -- --all</div><div class="line">git push origin master --force</div><div class="line">rm -rf .git/refs/original/</div><div class="line">git reflog expire --expire=now --all</div><div class="line">git gc --prune=now</div><div class="line">git gc --aggressive --prune=now</div></pre></td></tr></table></figure>
-<p><strong>注</strong>：文件名|文件夹/文件名，举个例子</p>
-<p>file.txt</p>
-<p>folder/file.txt</p>
-<p>其他的按步骤复制，依次执行。</p>
-
-    
-    </div>
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
-
-</article>
-    </li>
-  
-    <li class="post-list-item">
-        <article id="post-android/thread/1" 
-  class="article article-type-post" itemprop="blogPost">
-     
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/07/20/android/thread/1/">Android 判断线程是否是主线程</a>
-    </h3>
-  
-
-
-
-    <div class="post-meta">
-        <time datetime="2016-07-20T04:38:31.924Z" itemprop="datePublished" class="post-time">
-  2016-07-20
-</time>
-
-        
-
- 
-    </div>
-    
-    <div class="post-content" id="post-content" itemprop="postContent" >
-    
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkThread</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">if</span> (Looper.myLooper() != Looper.getMainLooper()) &#123;  </div><div class="line">        &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>获取当前线程的looper与主线程的looper比对，如果一样，说明是主线程；如果不一样，说明不是主线程</p>
-
-    
-    </div>
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
-
-</article>
-    </li>
-  
-    <li class="post-list-item">
-        <article id="post-android/install/1" 
-  class="article article-type-post" itemprop="blogPost">
-     
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/07/16/android/install/1/">INSTALL_FAILED_UID_CHANGED 解决方案</a>
-    </h3>
-  
-
-
-
-    <div class="post-meta">
-        <time datetime="2016-07-16T07:08:01.009Z" itemprop="datePublished" class="post-time">
-  2016-07-16
-</time>
-
-        
-
- 
-    </div>
-    
-    <div class="post-content" id="post-content" itemprop="postContent" >
-    
-        <p><strong>原因</strong>：以前安装过这个应用程序，因为检查到原来/data/data下的文件对应uid还是旧的</p>
-<p><strong>解决方案</strong>：到/data/data下删除完这个程序包名对应的文件夹， 新安装的程序会另外生成uid。</p>
-
-    
-    </div>
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编译部署/">编译部署</a></li></ul>
-
-</article>
-    </li>
-  
-    <li class="post-list-item">
-        <article id="post-android/decompile/1" 
-  class="article article-type-post" itemprop="blogPost">
-     
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/07/14/android/decompile/1/">Input file was not found or was not readable 解决方案</a>
-    </h3>
-  
-
-
-
-    <div class="post-meta">
-        <time datetime="2016-07-14T07:33:57.572Z" itemprop="datePublished" class="post-time">
-  2016-07-14
-</time>
-
-        
-
- 
-    </div>
-    
-    <div class="post-content" id="post-content" itemprop="postContent" >
-    
-        <p>apktool反编译时经常会出现下面的信息</p>
-<p>1.Input file  was not found or was not readable.</p>
-<p>2.Destination directory (C:\Users\user\a) already exists. Use -f switch if you want to overwrite it.</p>
-<p>3.Exception in thread “main” brut.androlib.AndrolibException: Could not decode ars c fil……….</p>
-<p>解决方案：</p>
-<p>1和2是因为apktool升级到2.0以上时,使用方式已经替换,格式为:apktool d [-s] -f <apkpath> -o <folderpath>,参数具体的意思可以直接打apktool回车(windows)查看帮助</folderpath></apkpath></p>
-<p>3是因为apktool版本过低导致,请升级到最新版本.<a href="https://bitbucket.org/iBotPeaches/apktool/downloads" target="_blank" rel="external">https://bitbucket.org/iBotPeaches/apktool/downloads</a></p>
-
-    
-    </div>
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反编译/">反编译</a></li></ul>
-
-</article>
-    </li>
-  
-    <li class="post-list-item">
-        <article id="post-android/http/1" 
-  class="article article-type-post" itemprop="blogPost">
-     
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/07/13/android/http/1/">HttpClient 的 NoHttpResponseException 解决方案</a>
-    </h3>
-  
-
-
-
-    <div class="post-meta">
-        <time datetime="2016-07-13T10:20:29.967Z" itemprop="datePublished" class="post-time">
-  2016-07-13
-</time>
-
-        
-
- 
-    </div>
-    
-    <div class="post-content" id="post-content" itemprop="postContent" >
-    
-        <p>最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。</p>
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。</p>
 <p>在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主要是因为我们的软件要求支持2.2以上，所以2.3以下还是得用 HttpClient，因为官网是这么说的：</p>
 <p><code>Apache HTTP client has fewer bugs in Android 2.2 (Froyo) and earlier releases. For Android 2.3 (Gingerbread) and later,HttpURLConnection is the best choice.</code></p>
 <p>Android 上面用的都是比较旧的 HttpClient，bug也比较多，所以建议用最新稳定版的HttpClient，最新的 HttpClient 直接放到项目里是不可以的，所以我用了一个老外的 httpclientandroidlib-1.2.1.jar，这个人一直在维护更新，搜索引擎搜一下就行了，他封装的是4.3.2版的 HttpClient，这是个在 stackoverflow上面搜到的，新版的 HttpClient 解决了很多bug，这里就不多说了，直接去官网看吧。说一下NoHttpResponseException 问题,这个问题其实就是大意导致的首先看下面的代码：</p>
@@ -417,16 +241,57 @@
 <p>由此可以得出结论，range 超出范围可能只是其中的一种出错原因，还有可能其他配置参数或者请求信息不正确导致服务器不能正确返回 response，致使 HttpClient 抛出 NoHttpResponseException，所以建议出现这种错误的时候，检查一下header等位置，是否符合规定。</p>
 <p>此文只是个人记录，参考为主，如果说的不正确，请评论指出，互相学习，抛砖引玉，谢谢！Peace&amp;love</p>
 
-    
-    </div>
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
-
-</article>
-    </li>
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="http://adbbb.com/2016/07/13/android/http/1/" target="_blank" rel="external">http://adbbb.com/2016/07/13/android/http/1/</a>
+                </p>
+                <footer><cite><a href="http://adbbb.com">@用简单的问答，诠释你的疑问</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
   
-</ul>
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2016/07/14/android/decompile/1/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Input file was not found or was not readable 解决方案</h4>
+      </a>
+    </div>
+  
 
+  
+</nav>
+
+
+            
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android/http/1" data-title="HttpClient 的 NoHttpResponseException 解决方案" data-url="http://adbbb.com/2016/07/13/android/http/1/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"Shine"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+        </div>
+    </div>
+</article>
     </div>
   </main>
 <div class="mask" id="mask"></div>
@@ -434,10 +299,10 @@
 
 <script>
 var BLOG_SHARE = {
-    title: "用简单的问答，诠释你的疑问",
+    title: "HttpClient 的 NoHttpResponseException 解决方案",
     pic: "/img/logo.jpg",
     summary: document.getElementsByName('summary')[0].content,
-    url: "http://adbbb.com/index.html"
+    url: "http://adbbb.com/2016/07/13/android/http/1/index.html"
 };
 </script>
 <div class="global-share" id="global-share">

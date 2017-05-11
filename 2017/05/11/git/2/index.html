@@ -3,26 +3,56 @@
 <head>
   <meta charset="utf-8">
   
-  <title>HttpClient 的 NoHttpResponseException 解决方案 | 用简单的问答，诠释你的疑问 | 改变世界的同时顺便改善一下自己的生活</title>
+  <title>Git 回滚 | 用简单的问答，诠释你的疑问 | 改变世界的同时顺便改善一下自己的生活</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="theme-color" content="#3F51B5">
   
   
-  <meta name="keywords" content="网络">
-  <meta name="description" content="最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。
-在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主">
+  <meta name="keywords" content="Git">
+  <meta name="description" content="问题：
+
+回滚上一版
+回滚指定版本
+
+解决方案：
+
+没有push
+1git reset [--soft | --mixed | --hard]
+注：git reset是直接删除指定的提交。
+① –mixed：保留源码，回滚到上一版本，git reset 默认是 –mixed 模式，git reset –mixed  等价于  git reset，将commit和index 信息回滚。
+② –sof">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HttpClient 的 NoHttpResponseException 解决方案">
-<meta property="og:url" content="http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/index.html">
+<meta property="og:title" content="Git 回滚">
+<meta property="og:url" content="http://adbbb.com/2017/05/11/git/2/index.html">
 <meta property="og:site_name" content="用简单的问答，诠释你的疑问">
-<meta property="og:description" content="最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。
-在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主">
-<meta property="og:updated_time" content="2016-07-14T08:11:10.392Z">
+<meta property="og:description" content="问题：
+
+回滚上一版
+回滚指定版本
+
+解决方案：
+
+没有push
+1git reset [--soft | --mixed | --hard]
+注：git reset是直接删除指定的提交。
+① –mixed：保留源码，回滚到上一版本，git reset 默认是 –mixed 模式，git reset –mixed  等价于  git reset，将commit和index 信息回滚。
+② –sof">
+<meta property="og:updated_time" content="2017-05-11T10:38:16.109Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HttpClient 的 NoHttpResponseException 解决方案">
-<meta name="twitter:description" content="最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。
-在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主">
+<meta name="twitter:title" content="Git 回滚">
+<meta name="twitter:description" content="问题：
+
+回滚上一版
+回滚指定版本
+
+解决方案：
+
+没有push
+1git reset [--soft | --mixed | --hard]
+注：git reset是直接删除指定的提交。
+① –mixed：保留源码，回滚到上一版本，git reset 默认是 –mixed 模式，git reset –mixed  等价于  git reset，将commit和index 信息回滚。
+② –sof">
   
     <link rel="alternative" href="/atom.xml" title="用简单的问答，诠释你的疑问" type="application/atom+xml">
   
@@ -110,7 +140,7 @@
 
   <footer class="footer">
   <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
-  <p>用简单的问答，诠释你的疑问 &copy; 2016</p>
+  <p>用简单的问答，诠释你的疑问 &copy; 2017</p>
   <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
   <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
   <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
@@ -125,7 +155,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">HttpClient 的 NoHttpResponseException 解决方案</div>
+        <div class="flex-col header-title ellipsis">Git 回滚</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -146,11 +176,11 @@
 </header>
 <header class="content-header">
   <div class="container">
-    <h1 class="author">HttpClient 的 NoHttpResponseException 解决方案</h1>
+    <h1 class="author">Git 回滚</h1>
     <h5 class="subtitle">
           
-            <time datetime="2016-07-13T10:20:29.967Z" itemprop="datePublished" class="page-time">
-  2016-07-13
+            <time datetime="2017-05-11T10:17:38.131Z" itemprop="datePublished" class="page-time">
+  2017-05-11
 </time>
 
  
@@ -160,11 +190,11 @@
 </header>
 
     <div class="container body-wrap">
-      <article id="post-1/httpclient-no-http-response-exception" 
+      <article id="post-git/2" 
   class="article article-type-post" itemprop="blogPost">
     <div class="post-meat flex-row">
         
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
 
     </div>
     <div class="post-body">
@@ -211,7 +241,7 @@
 
             
             <nav class="post-toc-wrap" id="post-toc">
-            
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#操作时注意事项："><span class="post-toc-text">操作时注意事项：</span></a></li></ol>
             </nav>
             
         </aside>
@@ -219,32 +249,36 @@
         <div class="post-main">
 
             <div class="post-content" id="post-content" itemprop="postContent">
-            <p>最近公司在搞离线缓存，涉及视频的分片下载，也就是断点续传问题，下载过程中遇到了一个比较严重的问题，就是请求服务器的时候返回 NoHttpResponseException，导致下载率直线下降。搜索了国内和国外的文章，基本都没有解决问题，在这吐吐槽，索性自己尝试解决一下。</p>
-<p>在解决这个问题的时候，我想说下我的断点续传解决方案,我用的是 HttpClient4.3.2，之所以选择HttpClient，主要是因为我们的软件要求支持2.2以上，所以2.3以下还是得用 HttpClient，因为官网是这么说的：</p>
-<p><code>Apache HTTP client has fewer bugs in Android 2.2 (Froyo) and earlier releases. For Android 2.3 (Gingerbread) and later,HttpURLConnection is the best choice.</code></p>
-<p>Android 上面用的都是比较旧的 HttpClient，bug也比较多，所以建议用最新稳定版的HttpClient，最新的 HttpClient 直接放到项目里是不可以的，所以我用了一个老外的 httpclientandroidlib-1.2.1.jar，这个人一直在维护更新，搜索引擎搜一下就行了，他封装的是4.3.2版的 HttpClient，这是个在 stackoverflow上面搜到的，新版的 HttpClient 解决了很多bug，这里就不多说了，直接去官网看吧。说一下NoHttpResponseException 问题,这个问题其实就是大意导致的首先看下面的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpGet.addHeader(<span class="string">"Range"</span>, <span class="string">"bytes="</span> + alreadySize + <span class="string">"-"</span>+ totalSize);</div></pre></td></tr></table></figure>
-<p>在这句之后执行请求，就会出现 NoHttpResponseException 。(根据服务器具体情况，如果兼容错误的服务器，不会报出异常，只说异常情况下的)</p>
-<p><strong>分析</strong></p>
-<p>这里执行：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpGet.addHeader(<span class="string">"Range"</span>, <span class="string">"bytes=0-"</span>);</div></pre></td></tr></table></figure>
-<p>返回的 Response 的 Header 中的部分信息如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Content-Range: bytes 0-97103319/97103320</div></pre></td></tr></table></figure>
-<p>0 代表开始位置，97103319 表示服务器可以接受的最大位置(结束位置)，97103320 表示文件的长度。</p>
-<p>问题出现了，我上面请求 range 的时候给的是文件长度 (97103320)，而服务器能接受的是 97103319，超出了范围，所以服务器返回了 NoHttpResponseException。</p>
-<p>再看 HttpClient 源码, NoHttpResponseException 是从什么地方抛出来的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// clear the buffer  </span></div><div class="line">            <span class="keyword">this</span>.lineBuf.clear();  </div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> i = sessionBuffer.readLine(<span class="keyword">this</span>.lineBuf);  </div><div class="line">            <span class="keyword">if</span> (i == -<span class="number">1</span> &amp;&amp; count == <span class="number">0</span>) &#123;  </div><div class="line">                <span class="comment">// The server just dropped connection on us  </span></div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> NoHttpResponseException(<span class="string">"The target server failed to respond"</span>);  </div><div class="line">            &#125;</div></pre></td></tr></table></figure>
-<p>由上面的代码可知，readLine 的时候，i=-1，所以抛出了 NoHttpResponseException，为什么 i=-1呢，其实是因为我们 range 请求的时候，超出了范围，导致服务器未返回数据，致使 readLine 为-1。</p>
-<p><strong>解决方案</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">httpGet.addHeader(<span class="string">"Range"</span>, <span class="string">"bytes="</span> + alreadySize + <span class="string">"-"</span>  </div><div class="line">                    + (totalSize-<span class="number">1</span>));</div></pre></td></tr></table></figure>
-<p>这样请求之后，服务器就可以正常返回 response 了。</p>
-<p>由此可以得出结论，range 超出范围可能只是其中的一种出错原因，还有可能其他配置参数或者请求信息不正确导致服务器不能正确返回 response，致使 HttpClient 抛出 NoHttpResponseException，所以建议出现这种错误的时候，检查一下header等位置，是否符合规定。</p>
-<p>此文只是个人记录，参考为主，如果说的不正确，请评论指出，互相学习，抛砖引玉，谢谢！Peace&amp;love</p>
+            <p><strong>问题</strong>：</p>
+<ol>
+<li>回滚上一版</li>
+<li>回滚指定版本</li>
+</ol>
+<p><strong>解决方案</strong>：</p>
+<ol>
+<li><p>没有push</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset [--soft | --mixed | --hard]</div></pre></td></tr></table></figure>
+<p><strong>注</strong>：git reset是直接删除指定的提交。</p>
+<p>① –mixed：保留源码，回滚到上一版本，git reset 默认是 –mixed 模式，git reset –mixed  等价于  git reset，将commit和index 信息回滚。</p>
+<p>② –soft：保留源码，将commit 信息回滚，不涉及index的回滚。</p>
+<p>③ –hard：不保留源码，将commit和index 信息回滚。</p>
+</li>
+<li><p>已经push</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git revert commitId</div></pre></td></tr></table></figure>
+<p><strong>注</strong>：git revert用一个新提交来消除一个历史提交所做的任何修改。</p>
+</li>
+</ol>
+<h4 id="操作时注意事项："><a href="#操作时注意事项：" class="headerlink" title="操作时注意事项："></a>操作时注意事项：</h4><p>第一：</p>
+<p>上面我们说的如果你已经push到线上代码库， reset 删除指定commit以后，你git push可能导致一大堆冲突。但是revert 并不会。</p>
+<p>第二：</p>
+<p>如果在日后现有分支和历史分支需要合并的时候，reset 恢复部分的代码依然会出现在历史分支里。但是revert 方向提交的commit 并不会出现在历史分支里。</p>
+<p>第三：</p>
+<p>reset 是在正常的commit历史中，删除了指定的commit,这时 HEAD 是向后移动了，而 revert 是在正常的commit历史中再commit一次,只不过是反向提交，他的 HEAD 是一直向前的。</p>
 
             <blockquote>
                 <p>
                 本文地址：
-                <a href="http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/" target="_blank" rel="external">http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/</a>
+                <a href="http://adbbb.com/2017/05/11/git/2/" target="_blank" rel="external">http://adbbb.com/2017/05/11/git/2/</a>
                 </p>
                 <footer><cite><a href="http://adbbb.com">@用简单的问答，诠释你的疑问</a></cite></footer>
             </blockquote>
@@ -252,14 +286,14 @@
             
 <nav class="post-nav">
   
-    <div class="waves-block waves-effect prev fl">
-      <a href="/2016/07/14/1/input-file-was-not-found-or-was-not-readable/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Input file was not found or was not readable 解决方案</h4>
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2016/08/08/git/1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">删除 Github 上某个文件的历史记录</h4>
       </a>
     </div>
-  
-
   
 </nav>
 
@@ -268,7 +302,7 @@
             
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="1/httpclient-no-http-response-exception" data-title="HttpClient 的 NoHttpResponseException 解决方案" data-url="http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/index.html"></div>
+	<div class="ds-thread" data-thread-key="git/2" data-title="Git 回滚" data-url="http://adbbb.com/2017/05/11/git/2/index.html"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -299,10 +333,10 @@
 
 <script>
 var BLOG_SHARE = {
-    title: "HttpClient 的 NoHttpResponseException 解决方案",
+    title: "Git 回滚",
     pic: "/img/logo.jpg",
     summary: document.getElementsByName('summary')[0].content,
-    url: "http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/index.html"
+    url: "http://adbbb.com/2017/05/11/git/2/index.html"
 };
 </script>
 <div class="global-share" id="global-share">

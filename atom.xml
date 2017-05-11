@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://adbbb.com/"/>
-  <updated>2016-08-08T09:17:46.019Z</updated>
+  <updated>2017-05-11T10:38:16.109Z</updated>
   <id>http://adbbb.com/</id>
   
   <author>
@@ -16,9 +16,62 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Git 回滚</title>
+    <link href="http://adbbb.com/2017/05/11/git/2/"/>
+    <id>http://adbbb.com/2017/05/11/git/2/</id>
+    <published>2017-05-11T10:17:38.131Z</published>
+    <updated>2017-05-11T10:38:16.109Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;strong&gt;问题&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;回滚上一版&lt;/li&gt;
+&lt;li&gt;回滚指定版本&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;解决方案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;没有push&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;git reset [--soft | --mixed | --hard]&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;注&lt;/strong&gt;：git reset是直接删除指定的提交。&lt;/p&gt;
+&lt;p&gt;① –mixed：保留源码，回滚到上一版本，git reset 默认是 –mixed 模式，git reset –mixed  等价于  git reset，将commit和index 信息回滚。&lt;/p&gt;
+&lt;p&gt;② –soft：保留源码，将commit 信息回滚，不涉及index的回滚。&lt;/p&gt;
+&lt;p&gt;③ –hard：不保留源码，将commit和index 信息回滚。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;已经push&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;git revert commitId&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;注&lt;/strong&gt;：git revert用一个新提交来消除一个历史提交所做的任何修改。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;操作时注意事项：&quot;&gt;&lt;a href=&quot;#操作时注意事项：&quot; class=&quot;headerlink&quot; title=&quot;操作时注意事项：&quot;&gt;&lt;/a&gt;操作时注意事项：&lt;/h4&gt;&lt;p&gt;第一：&lt;/p&gt;
+&lt;p&gt;上面我们说的如果你已经push到线上代码库， reset 删除指定commit以后，你git push可能导致一大堆冲突。但是revert 并不会。&lt;/p&gt;
+&lt;p&gt;第二：&lt;/p&gt;
+&lt;p&gt;如果在日后现有分支和历史分支需要合并的时候，reset 恢复部分的代码依然会出现在历史分支里。但是revert 方向提交的commit 并不会出现在历史分支里。&lt;/p&gt;
+&lt;p&gt;第三：&lt;/p&gt;
+&lt;p&gt;reset 是在正常的commit历史中，删除了指定的commit,这时 HEAD 是向后移动了，而 revert 是在正常的commit历史中再commit一次,只不过是反向提交，他的 HEAD 是一直向前的。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;问题&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;回滚上一版&lt;/li&gt;
+&lt;li&gt;回滚指定版本&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;解决方案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;没有push&lt;/p&gt;
+&lt;figure class=&quot;hi
+    
+    </summary>
+    
+    
+      <category term="Git" scheme="http://adbbb.com/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
     <title>删除 Github 上某个文件的历史记录</title>
-    <link href="http://adbbb.com/2016/08/08/4/delete-the-history-of-a-file-on-github/"/>
-    <id>http://adbbb.com/2016/08/08/4/delete-the-history-of-a-file-on-github/</id>
+    <link href="http://adbbb.com/2016/08/08/git/1/"/>
+    <id>http://adbbb.com/2016/08/08/git/1/</id>
     <published>2016-08-08T08:40:43.411Z</published>
     <updated>2016-08-08T09:17:46.019Z</updated>
     
@@ -46,8 +99,8 @@
   
   <entry>
     <title>Android 判断线程是否是主线程</title>
-    <link href="http://adbbb.com/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/"/>
-    <id>http://adbbb.com/2016/07/20/3/to-determine-whether-the-thread-is-the-main-thread/</id>
+    <link href="http://adbbb.com/2016/07/20/android/thread/1/"/>
+    <id>http://adbbb.com/2016/07/20/android/thread/1/</id>
     <published>2016-07-20T04:38:31.924Z</published>
     <updated>2016-07-20T05:17:46.449Z</updated>
     
@@ -68,8 +121,8 @@
   
   <entry>
     <title>INSTALL_FAILED_UID_CHANGED 解决方案</title>
-    <link href="http://adbbb.com/2016/07/16/2/install-failed-uid-changed-case/"/>
-    <id>http://adbbb.com/2016/07/16/2/install-failed-uid-changed-case/</id>
+    <link href="http://adbbb.com/2016/07/16/android/install/1/"/>
+    <id>http://adbbb.com/2016/07/16/android/install/1/</id>
     <published>2016-07-16T07:08:01.009Z</published>
     <updated>2016-07-16T07:12:31.839Z</updated>
     
@@ -91,8 +144,8 @@
   
   <entry>
     <title>Input file was not found or was not readable 解决方案</title>
-    <link href="http://adbbb.com/2016/07/14/1/input-file-was-not-found-or-was-not-readable/"/>
-    <id>http://adbbb.com/2016/07/14/1/input-file-was-not-found-or-was-not-readable/</id>
+    <link href="http://adbbb.com/2016/07/14/android/decompile/1/"/>
+    <id>http://adbbb.com/2016/07/14/android/decompile/1/</id>
     <published>2016-07-14T07:33:57.572Z</published>
     <updated>2016-07-14T08:12:06.707Z</updated>
     
@@ -120,8 +173,8 @@
   
   <entry>
     <title>HttpClient 的 NoHttpResponseException 解决方案</title>
-    <link href="http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/"/>
-    <id>http://adbbb.com/2016/07/13/1/httpclient-no-http-response-exception/</id>
+    <link href="http://adbbb.com/2016/07/13/android/http/1/"/>
+    <id>http://adbbb.com/2016/07/13/android/http/1/</id>
     <published>2016-07-13T10:20:29.967Z</published>
     <updated>2016-07-14T08:11:10.392Z</updated>
     
